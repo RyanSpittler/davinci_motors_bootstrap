@@ -7,7 +7,10 @@ RSpec.describe Car, type: :model do
   it { should validate_presence_of(:price) }
   it { should validate_numericality_of(:price) }
   it {
-    should validate_numericality_of(:price).is_less_than(1_000_000).is_greater_than(0.00)
+    should validate_numericality_of(:price).
+        is_less_than(1_000_000).
+        is_greater_than(0.00)
   }
   it { should validate_inclusion_of(:year).in_range(1979..Time.zone.now.year.+(1)) }
+  it { should validate_inclusion_of(:make).in_array(Car::MAKES_AND_MODELS.keys) }
 end
