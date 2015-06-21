@@ -5,7 +5,7 @@ RSpec.describe "cars/edit", type: :view do
     @car = assign(:car, Car.create!(
       :make => "MyString",
       :model => "MyString",
-      :year => 1,
+      :year => 1999,
       :price => "9.99"
     ))
   end

@@ -5,6 +5,7 @@ gem 'guard-bundler'
 gem 'guard-rspec'
 gem 'factory_girl_rails'
 gem 'faker'
+gem 'shoulda-matchers'
 
 gem 'bootstrap-generators'
 
