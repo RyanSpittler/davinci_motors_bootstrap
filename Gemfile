@@ -4,7 +4,7 @@ gem 'rspec-rails'
 gem 'guard-bundler'
 gem 'guard-rspec'
 gem 'factory_girl_rails'
-gem 'capybara'
+gem 'faker'
 
 gem 'bootstrap-generators'
 
@@ -54,4 +54,9 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+group :test do
+  gem 'launchy'
+  gem 'capybara'
 end
