@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe "cars/edit", type: :view do
   before(:each) do
     @car = assign(:car, Car.create!(
-      :make => "MyString",
-      :model => "MyString",
-      :year => 1,
+      :make => "Chevrolet",
+      :model => "Cavalier",
+      :year => 1999,
       :price => "9.99"
     ))
   end

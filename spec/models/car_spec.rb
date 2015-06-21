@@ -1,5 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Car, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should validate_presence_of(:make) }
+  it { should validate_presence_of(:model) }
+  it { should validate_presence_of(:year) }
+  it { should validate_presence_of(:price) }
+  it { should validate_numericality_of(:price) }
+  it {
+    should validate_numericality_of(:price).
+        is_less_than(1_000_000).
+        is_greater_than(0.00)
+  }
+  it { should validate_inclusion_of(:year).in_range(1979..Time.zone.now.year.+(1)) }
+  it { should validate_inclusion_of(:make).in_array(Car::MAKES_AND_MODELS.keys) }
 end
