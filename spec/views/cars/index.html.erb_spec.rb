@@ -23,6 +23,6 @@ RSpec.describe "cars/index", type: :view do
     assert_select "tr>td", :text => "Make".to_s, :count => 2
     assert_select "tr>td", :text => "Model".to_s, :count => 2
     assert_select "tr>td", :text => 1.to_s, :count => 2
-    assert_select "tr>td", :text => "9.99".to_s, :count => 2
+    assert_select "tr>td", :text => "$9.99".to_s, :count => 2
   end
 end
