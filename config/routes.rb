@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
+
   get 'pages/about', as: 'about'
   get 'pages/contact', as: 'contact'
 
   resources :cars
+
+  resources :users,
+    only: [:new, :create],
+    path_names: {new: "signup"}
+  get "login" => "sessions#login"
+  post "login" => "sessions#create"
+  delete "/logout" => "sessions#destroy"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
