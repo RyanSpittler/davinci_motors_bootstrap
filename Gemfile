@@ -6,7 +6,7 @@ gem 'guard-rspec'
 gem 'factory_girl_rails'
 gem 'faker'
 gem 'shoulda-matchers'
-
+gem 'bcrypt'
 gem 'bootstrap-generators'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
