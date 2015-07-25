@@ -22,7 +22,7 @@ feature 'Creating Cars' do
   end
 
   scenario 'can create a second car' do
-    car2 = FactoryGirl.create(:car)
+    FactoryGirl.create(:car)
 
     visit '/'
 
