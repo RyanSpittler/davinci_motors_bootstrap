@@ -27,7 +27,7 @@ This project is for practice. Many of the strategies used here were learned from
 * Test Suite: RSpec with Capybara, FactoryGirlRails, and Faker 
 -- You can view the tests by running `dotenv guard` on the command line.
 
-* Front End: Bootstrap
+* Front End: Bootstrap, Font Awesome, Social Buttons
 
 * Pagination: Will_Paginate
 
