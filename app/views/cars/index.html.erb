@@ -6,30 +6,34 @@
   <h1>Listing Cars</h1>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Make</th>
-        <th>Model</th>
-        <th>Year</th>
-        <th>Price</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
+<div class="cars">
+  <%= will_paginate @cars, renderer: BootstrapPagination::Rails %>
 
-    <tbody>
-      <%= content_tag_for(:tr, @cars) do |car| %>
-        <td><%= car.make %></td>
-        <td><%= car.model %></td>
-        <td><%= car.year %></td>
-        <td><%= number_to_currency(car.price) %></td>
-        <td><%= link_to 'Show', car %></td>
-        <% if current_user %>
-          <td><%= link_to 'Claim', claim_car_path(car) %></td>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Price</th>
+          <th></th>
+          <% if current_user %><th></th><% end %>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <%= content_tag_for(:tr, @cars) do |car| %>
+          <td><%= car.make %></td>
+          <td><%= car.model %></td>
+          <td><%= car.year %></td>
+          <td><%= number_to_currency(car.price) %></td>
+          <td><%= link_to 'Show', car %></td>
+          <% if current_user %>
+            <td><%= link_to 'Claim', claim_car_path(car) %></td>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>

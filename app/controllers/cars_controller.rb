@@ -4,7 +4,7 @@ class CarsController < ApplicationController
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.where(user: nil)
+    @cars = Car.where(user: nil).paginate(page: params[:page])
   end
 
   def my_cars
