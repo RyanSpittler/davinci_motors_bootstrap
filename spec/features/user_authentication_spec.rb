@@ -1,8 +1,17 @@
 require 'rails_helper'
 
+def login_test_user
+  click_link 'Login'
+  fill_in 'Email', with: @user.email
+  fill_in 'Password', with: @user.password
+  click_button 'Login'
+end
+
 feature 'User Authentication' do
   before(:each) do
     @user = FactoryGirl.create(:user)
+    @car1 = FactoryGirl.create(:car)
+    @car2 = FactoryGirl.create(:car)
   end
   scenario 'allows a user to signup' do
     visit '/'
@@ -27,27 +36,20 @@ feature 'User Authentication' do
 
     expect(page).to have_link('Login')
 
-    click_link 'Login'
-
-    fill_in 'Email', with: @user.email
-    fill_in 'Password', with: @user.password
-
-    click_button 'Login'
+    login_test_user
 
     expect(page).to have_text("Welcome back #{@user.first_name}")
     expect(page).to have_text("Signed in as #{@user.email}")
   end
 
-  scenario 'prevents existing users from logging in with bad password' do
+  scenario 'prevents users from logging in with bad password' do
     visit '/'
 
     expect(page).to have_link('Login')
 
     click_link 'Login'
-
     fill_in 'Email', with: @user.email
-    fill_in 'Password', with: 'NOT_YOUR_PASSWORD'
-
+    fill_in 'Password', with: "NOT_YOUR_PASSWORD"
     click_button 'Login'
 
     expect(page).to have_text("Invalid email or password")
@@ -55,12 +57,9 @@ feature 'User Authentication' do
   end
 
   scenario 'allows logged in users to logout' do
-    visit login_path
+    visit "/"
 
-    fill_in 'Email', with: @user.email
-    fill_in 'Password', with: @user.password
-
-    click_button 'Login'
+    login_test_user
 
     expect(page).to have_text("Signed in as #{@user.email}")
 
@@ -73,36 +72,30 @@ feature 'User Authentication' do
   end
 
   scenario "allows claiming and unclaiming of cars" do
-    @car1 = FactoryGirl.create(:car)
-    @car2 = FactoryGirl.create(:car)
-    
     visit "/"
     expect(page).to_not have_link("Claim")
 
-    click_link "Login"
-    fill_in "Email", with: @user.email
-    fill_in "Password", with: @user.password
-    click_button "Login"
-    
+    login_test_user
+
     within("#car_#{@car1.id}") do
       click_link "Claim"
     end
-    
+
     expect(page).to have_text("#{@car1.make} #{@car1.model} has been moved to your inventory.")
     expect(page).to_not have_selector("#car_#{@car1.id}")
     expect(page).to have_selector("#car_#{@car2.id}")
-    
+
     expect(page).to have_link("My Cars")
     click_link "My Cars"
 
     expect(page).to have_selector("#car_#{@car1.id}")
     expect(page).to_not have_selector("#car_#{@car2.id}")
-    
+
     click_link "Home"
     within("#car_#{@car2.id}") do
       click_link "Claim"
     end
-    
+
     click_link "My Cars"
     within("#car_#{@car1.id}") do
       click_link "Unclaim"
@@ -111,9 +104,25 @@ feature 'User Authentication' do
     expect(page).to have_text("#{@car1.make} #{@car1.model} has been removed from your inventory.")
     expect(page).to_not have_selector("#car_#{@car1.id}")
     expect(page).to have_selector("#car_#{@car2.id}")
-    
+
     click_link "Home"
     expect(page).to have_selector("#car_#{@car1.id}")
     expect(page).to_not have_selector("#car_#{@car2.id}")
+  end
+
+  scenario "allows users to edit or destroy claimed cars only" do
+    visit "/"
+    expect(page).to_not have_link("Edit")
+    expect(page).to_not have_link("Destroy")
+
+    login_test_user
+    
+    within("#car_#{@car1.id}") do
+      click_link "Claim"
+    end
+    click_link "My Cars"
+
+    expect(page).to have_link("Edit")
+    expect(page).to have_link("Destroy")
   end
 end

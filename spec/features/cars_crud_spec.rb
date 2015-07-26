@@ -43,9 +43,16 @@ end
 
 feature 'Editing Cars' do
   scenario 'can edit a car' do
+    @user = FactoryGirl.create(:user)
     @car = FactoryGirl.create(:car)
+    @user.cars << @car
 
     visit '/'
+    click_link "Login"
+    fill_in "Email", with: @user.email
+    fill_in "Password", with: @user.password
+    click_button "Login"
+    click_link "My Cars"
 
     click_link 'Edit'
 
@@ -60,19 +67,26 @@ end
 
 feature 'Deleting Cars' do
   scenario 'can delete a car' do
-    @car1 = FactoryGirl.create(:car)
-    @car2 = FactoryGirl.create(:car)
+    @user = FactoryGirl.create(:user)
+    @user.cars << @car1 = FactoryGirl.create(:car)
+    @user.cars << @car2 = FactoryGirl.create(:car)
 
-    visit "/"
+    visit '/'
+    click_link "Login"
+    fill_in "Email", with: @user.email
+    fill_in "Password", with: @user.password
+    click_button "Login"
+    click_link "My Cars"
+
     click_link "destroy_car_#{@car2.id}"
+
+    expect(page).to have_content('Car was successfully destroyed.')
 
     expect(page).to have_content(@car1.make)
     expect(page).to have_content(@car1.model)
     expect(page).to have_content(@car1.year)
     thousands, hundreds = @car1.price.to_s[1..-6], @car1.price.to_s[-5..-1]
     expect(page).to have_content("#{thousands},#{hundreds}")
-
-    expect(page).to have_content('Car was successfully destroyed.')
 
     expect(page).to_not have_content(@car2.make)
     expect(page).to_not have_content(@car2.model)
