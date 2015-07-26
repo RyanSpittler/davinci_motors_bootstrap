@@ -15,6 +15,7 @@ This project is for practice. Many of the strategies used here were learned from
 * Users can edit and delete cars that they have claimed.
 * Users can unclaim cars.
 * When the list of cars is long enough, only ten cars are shown on each page.
+* User can use their social accounts to sign in to the site, instead of make a new account.
 
 ------
 
@@ -32,6 +33,8 @@ This project is for practice. Many of the strategies used here were learned from
 * Pagination: Will_Paginate
 
 * Environmental Key Management: DotEnv
+
+* OmniAuth: GitHub, Google+, Facebook
 
 ------
 
