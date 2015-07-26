@@ -13,4 +13,8 @@ class Car < ActiveRecord::Base
   validates_numericality_of :price, greater_than: 0.00, less_than: 1_000_000
 
   belongs_to :user
+  
+  def self.per_page
+    10
+  end
 end

@@ -1,13 +1,20 @@
 source 'https://rubygems.org'
 
+# Test suite
 gem 'rspec-rails'
 gem 'guard-bundler'
 gem 'guard-rspec'
 gem 'factory_girl_rails'
 gem 'faker'
 gem 'shoulda-matchers'
+
+# Password helper
 gem 'bcrypt'
+
+# Front end helpers
 gem 'bootstrap-generators'
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
