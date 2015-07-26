@@ -72,11 +72,14 @@ feature 'User Authentication' do
     expect(page).to_not have_text("Signed in as #{@user.email}")
   end
 
-  scenario "allows a logged in user to claim a car" do
+  scenario "allows claiming and unclaiming of cars" do
     @car1 = FactoryGirl.create(:car)
     @car2 = FactoryGirl.create(:car)
+    
+    visit "/"
+    expect(page).to_not have_link("Claim")
 
-    visit login_path
+    click_link "Login"
     fill_in "Email", with: @user.email
     fill_in "Password", with: @user.password
     click_button "Login"
@@ -92,6 +95,24 @@ feature 'User Authentication' do
     expect(page).to have_link("My Cars")
     click_link "My Cars"
 
+    expect(page).to have_selector("#car_#{@car1.id}")
+    expect(page).to_not have_selector("#car_#{@car2.id}")
+    
+    click_link "Home"
+    within("#car_#{@car2.id}") do
+      click_link "Claim"
+    end
+    
+    click_link "My Cars"
+    within("#car_#{@car1.id}") do
+      click_link "Unclaim"
+    end
+
+    expect(page).to have_text("#{@car1.make} #{@car1.model} has been removed from your inventory.")
+    expect(page).to_not have_selector("#car_#{@car1.id}")
+    expect(page).to have_selector("#car_#{@car2.id}")
+    
+    click_link "Home"
     expect(page).to have_selector("#car_#{@car1.id}")
     expect(page).to_not have_selector("#car_#{@car2.id}")
   end

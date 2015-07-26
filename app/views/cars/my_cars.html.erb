@@ -28,9 +28,7 @@
         <td><%= car.year %></td>
         <td><%= number_to_currency(car.price) %></td>
         <td><%= link_to 'Show', car %></td>
-        <!--<% if current_user %>-->
-          <!--<td><%= link_to 'Claim', claim_car_path(car) %></td>-->
-        <!--<% end %>-->
+        <td><%= link_to 'Unclaim', unclaim_car_path(car) %></td>
         <td><%= link_to 'Edit', edit_car_path(car) %></td>
         <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' }, id: dom_id(car, 'destroy') %></td>
       <% end %>

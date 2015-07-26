@@ -1,5 +1,5 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: [:show, :edit, :update, :destroy, :claim]
+  before_action :set_car, only: [:show, :edit, :update, :destroy, :claim, :unclaim]
 
   # GET /cars
   # GET /cars.json
@@ -69,6 +69,14 @@ class CarsController < ApplicationController
     if current_user
       current_user.cars << @car
       redirect_to root_path, notice: "#{@car.make} #{@car.model} has been moved to your inventory."
+    end
+  end
+
+  def unclaim
+    if current_user
+      @car.user = nil
+      @car.save
+      redirect_to my_cars_path, notice: "#{@car.make} #{@car.model} has been removed from your inventory."
     end
   end
 

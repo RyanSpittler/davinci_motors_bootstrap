@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :cars do
     member do
       get "claim" => "cars#claim"
+      get "unclaim" => "cars#unclaim"
     end
   end
   
