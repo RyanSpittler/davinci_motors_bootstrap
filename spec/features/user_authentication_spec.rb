@@ -26,9 +26,9 @@ feature 'User Authentication' do
     fill_in 'Email', with: 'bob@smith.com'
     fill_in 'Password', with: 'sup3rs3krit'
     fill_in 'Password Confirmation', with: 'sup3rs3krit'
-    click_button 'Signup'
+    click_button 'Submit'
 
-    expect(page).to have_text('Thank you for signing up Bob')
+    expect(page).to have_text('Thank you for signing up, Bob.')
     expect(page).to have_text('Signed in as bob@smith.com')
   end
 
@@ -39,7 +39,7 @@ feature 'User Authentication' do
 
     login_test_user
 
-    expect(page).to have_text("Welcome back #{@user.first_name}")
+    expect(page).to have_text("Welcome back, #{@user.first_name.titleize}.")
     expect(page).to have_text("Signed in as #{@user.email}")
   end
 

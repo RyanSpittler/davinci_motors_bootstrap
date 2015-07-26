@@ -8,8 +8,11 @@ gem 'factory_girl_rails'
 gem 'faker'
 gem 'shoulda-matchers'
 
-# Password helper
+# Authorization helpers
 gem 'bcrypt'
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
 
 # Front end helpers
 gem 'bootstrap-generators'
