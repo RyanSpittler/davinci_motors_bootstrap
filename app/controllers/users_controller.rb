@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
+    @providers = User.providers
   end
 
   def create
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:id] = @user.id
-        format.html { redirect_to root_path, notice: "Thank you for signing up #{@user.first_name}" }
+        format.html { redirect_to root_path, notice: "Thank you for signing up, #{@user.first_name.titleize}." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -23,6 +24,6 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:first_name, :last_name,
-      :email, :password, :password_confirmation)
+      :email, :password, :password_confirmation, :omniauth)
   end
 end
