@@ -44,8 +44,7 @@ end
 feature 'Editing Cars' do
   scenario 'can edit a car' do
     @user = FactoryGirl.create(:user)
-    @car = FactoryGirl.create(:car)
-    @user.cars << @car
+    @user.cars << @car = FactoryGirl.create(:car)
 
     visit '/'
     click_link "Login"

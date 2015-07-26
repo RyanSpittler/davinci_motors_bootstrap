@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "cars/index", type: :view do
-  include ActionView::Helpers
   before(:each) do
     controller.singleton_class.class_eval do
       protected
