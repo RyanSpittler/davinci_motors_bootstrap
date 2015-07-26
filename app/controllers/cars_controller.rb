@@ -1,10 +1,14 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: [:show, :edit, :update, :destroy]
+  before_action :set_car, only: [:show, :edit, :update, :destroy, :claim]
 
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.all
+    @cars = Car.where(user: nil)
+  end
+
+  def my_cars
+    @cars = Car.where(user: current_user)
   end
 
   # GET /cars/1
@@ -58,6 +62,13 @@ class CarsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to cars_url, notice: 'Car was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def claim
+    if current_user
+      current_user.cars << @car
+      redirect_to root_path, notice: "#{@car.make} #{@car.model} has been moved to your inventory."
     end
   end
 
