@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
   has_many :cars
 
   def self.providers
-    {github: 'GitHub', google_oauth2: 'Google'}
+    {github: 'GitHub', google_oauth2: 'Google', facebook: 'Facebook'}
   end
 end

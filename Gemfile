@@ -11,7 +11,8 @@ gem 'shoulda-matchers'
 # Authorization helpers
 gem 'bcrypt'
 gem 'omniauth-github'
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
 
 # Front end helpers
 gem 'bootstrap-generators'
