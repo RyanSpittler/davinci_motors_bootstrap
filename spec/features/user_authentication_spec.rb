@@ -12,6 +12,7 @@ feature 'User Authentication' do
     @user = FactoryGirl.create(:user)
     @car1 = FactoryGirl.create(:car)
     @car2 = FactoryGirl.create(:car)
+    @car3 = FactoryGirl.build(:car)
   end
   scenario 'allows a user to signup' do
     visit '/'
@@ -116,7 +117,7 @@ feature 'User Authentication' do
     expect(page).to_not have_link("Destroy")
 
     login_test_user
-    
+
     within("#car_#{@car1.id}") do
       click_link "Claim"
     end
@@ -124,5 +125,45 @@ feature 'User Authentication' do
 
     expect(page).to have_link("Edit")
     expect(page).to have_link("Destroy")
+  end
+
+  scenario "new cars are available to claim when not logged in" do
+    visit "/"
+    click_link "New Car"
+
+    fill_in "Make", with: @car3.make
+    fill_in "Model", with: @car3.model
+    fill_in "Year", with: @car3.year
+    fill_in "Price", with: @car3.price
+    click_button "Create Car"
+
+    @car3 = Car.where(price: @car3.price).first
+
+    login_test_user
+
+    within("#car_#{@car3.id}") do
+      expect(page).to have_link("Claim")
+    end
+  end
+
+  scenario "new cars belong to the user when logged in" do
+    visit "/"
+
+    login_test_user
+
+    click_link "New Car"
+
+    fill_in "Make", with: @car3.make
+    fill_in "Model", with: @car3.model
+    fill_in "Year", with: @car3.year
+    fill_in "Price", with: @car3.price
+    click_button "Create Car"
+
+    @car3 = Car.where(price: @car3.price).first
+
+    click_link "My Cars"
+    within("#car_#{@car3.id}") do
+      expect(page).to have_link("Unclaim")
+    end
   end
 end
