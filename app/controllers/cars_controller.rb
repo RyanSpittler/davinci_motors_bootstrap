@@ -8,7 +8,7 @@ class CarsController < ApplicationController
   end
 
   def my_cars
-    @cars = Car.where(user: current_user)
+    @cars = Car.where(user: current_user).paginate(page: params[:page])
   end
 
   # GET /cars/1
