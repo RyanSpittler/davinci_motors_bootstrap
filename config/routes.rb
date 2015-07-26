@@ -3,7 +3,14 @@ Rails.application.routes.draw do
   get 'pages/about', as: 'about'
   get 'pages/contact', as: 'contact'
 
-  resources :cars
+  resources :cars do
+    member do
+      get "claim" => "cars#claim"
+      get "unclaim" => "cars#unclaim"
+    end
+  end
+  
+  get "my_cars" => "cars#my_cars"
 
   resources :users,
     only: [:new, :create],

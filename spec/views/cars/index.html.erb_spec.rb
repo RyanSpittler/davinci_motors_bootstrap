@@ -2,6 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "cars/index", type: :view do
   before(:each) do
+    controller.singleton_class.class_eval do
+      protected
+      def current_user
+        FactoryGirl.build_stubbed(:user)
+      end
+      helper_method :current_user
+    end
     assign(:cars, [
       Car.create!(
         :make => "Chevrolet",
