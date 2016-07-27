@@ -68,6 +68,8 @@
       b[k]=o+'d.write("'+p().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};ld()};nt()})({
     loader: "static.olark.com/jsclient/loader0.js",name:"olark",methods:["configure","extend","declare","identify"]});
   /* custom configuration goes here (www.olark.com/documentation) */
+  olark.('api.visitor.updateFullName', {fullName: '<%= current_user.present? ? current_user.first_name : "Visitor" %>'});
+  olark.('api.visitor.updateVisitorStatus', {snippet: ['<%= current_user.present? ? current_user.email : "" %>', 'random stuff here']});
   olark.identify('2176-643-10-7219');/*]]>*/</script><noscript><a href="https://www.olark.com/site/2176-643-10-7219/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
   <!-- end olark code -->
 </body>
